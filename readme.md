@@ -2,7 +2,7 @@
 
 > Template used for creating [TodoMVC](http://todomvc.com) apps
 
-![todomvc](todos.png)
+![todomvc](https://xiong34664.github.io/todomvc/todos.png)
 
 
 
