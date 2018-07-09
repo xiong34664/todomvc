@@ -3,33 +3,6 @@
 
 	// Your starting point. Enjoy the ride!
 
-	const com = {
-		template:"#temp"
-	}
-
-	const router = new VueRouter({
-		routes: [{
-				path: '/',
-				component :com
-			},
-			{
-				path: '/login/:id',  //传参  参数  以对象方式储存在  params中
-				component: {
-					template: "<h2>登录</h2>",
-					created() {
-						console.log(this.$route.params.id)
-					},
-				}
-			},
-			{
-				path: '/register',
-				component: {
-					template: "<h2>注册</h2>"
-				}
-			}
-		]
-	})
-
 	var vm = new Vue({
 		el:'#app',
 		data:{
@@ -44,8 +17,12 @@
 			check:true,
 			completed:null
 		},
-		created(){},
-		router,
+		created(){
+			const data = localStorage.todos?JSON.parse(localStorage.todos):[]
+			if(data.length !== 0){
+				this.todos = data
+			}
+		},
 		methods:{
 			out(){
 				this.currentEditingId = null
@@ -96,19 +73,13 @@
 		watch: {
 			todos:{
 				handler(newVal,oldVal){
+					localStorage.todos = JSON.stringify(newVal)
 					for ( var i = 0; i < newVal.length; i++) {
 						if(!newVal[i].completed) return this.check=false;
 					}
 					this.check=true
 				},
                 deep:true
-			},
-			'$route.path':function(newVal,oldVal){
-				if (newVal === '/active') {
-					console.log("欢迎进入登录页面")
-				}else if(newVal === '/completed') {
-					console.log('欢迎进入注册页面')
-				}
 			}
 		},
 		computed: {
